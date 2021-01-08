@@ -154,6 +154,7 @@ int main() {
   Setup();
   while (!gameOver) {
     Draw();
+    //test
     Input();
     Logic();
     Sleep(10);
