@@ -13,16 +13,27 @@ int nTail;
 enum eDirection {STOP = 0, LEFT, RIGHT, UP, DOWN};
 eDirection dir;
 
+// Game options
+
+//The snake can go through the walls
+bool through;
+// Candy
+int candyX, candyY, nfruit;
+
 
 
 void Setup() {
   gameOver = false;
+  through = true;
   dir = STOP;
   x = width / 2; //head position
   y = height / 2; //head position
   fruitX = rand() % width;
   fruitY = rand() % height;
+  candyX = rand() % width;
+  candyY = rand() % height;
   score = 0;
+  nfruit = 0;
 }
 
 void Draw() {
@@ -42,6 +53,16 @@ void Draw() {
       }
       if (i == y && j == x) {
         cout << "O";
+      }
+      else if (i == candyY && j == candyX) {
+          if (score != 0 && nfruit % 4 == 0)
+          {
+              cout << "C";
+          }
+          else
+          {
+              cout << " ";
+          }
       }
       else if (i == fruitY && j == fruitX) {
         cout << "F";
@@ -69,7 +90,7 @@ void Draw() {
     cout << "#";
   }
   cout << endl;
-  cout << "Score: " << score << endl;
+  cout << "Score: " << score  << endl;
 }
 
 void Input() {
@@ -129,11 +150,19 @@ void Logic() {
         default:
             break;
     }
-    //if (x > width || x < 0 || y > height || y < 0)
-     //   gameOver = true;
-    // move snake around walls
-    if (x >= width-1) x = 0; else if (x < 0) x = width - 2;
-    if (y >= height) y = 0; else if (y < 0) y = height - 1;
+
+    // Snake goes theough walls or not
+    if (!through)
+    {
+        if (x > width - 2 || x < 0 || y > height || y < 0)
+            gameOver = true;
+    }
+    else
+    {
+        if (x >= width - 1) x = 0; else if (x < 0) x = width - 2;
+        if (y >= height) y = 0; else if (y < 0) y = height - 1;
+    }
+    
     for (int i = 0; i < nTail; i++)
     {
         if (x == tailX[i] && y == tailY[i])
@@ -143,8 +172,15 @@ void Logic() {
     }
     if (x == fruitX && y == fruitY) {
         score += 10;
+        nfruit += 1;
         fruitX = rand() % width;
         fruitY = rand() % height;
+        nTail++;
+    }
+    else if (x == candyX && y == candyY) {
+        score += 40;
+        candyX = rand() % width;
+        candyY = rand() % height;
         nTail++;
     }
       
@@ -154,7 +190,6 @@ int main() {
   Setup();
   while (!gameOver) {
     Draw();
-    //test
     Input();
     Logic();
     Sleep(10);
