@@ -5,11 +5,13 @@ using namespace std;
 
 // GLobal Variables
 bool gameOver;
+bool candy;
 const int width = 20;
 const int height = 20;
 int x, y, fruitX, fruitY, score; //coordinates
 int tailX[100], tailY[100];
 int nTail;
+int test_variable = 0;
 enum eDirection {STOP = 0, LEFT, RIGHT, UP, DOWN};
 eDirection dir;
 
@@ -25,6 +27,7 @@ int candyX, candyY, nfruit;
 void Setup() {
   gameOver = false;
   through = true;
+  candy = false;
   dir = STOP;
   x = width / 2; //head position
   y = height / 2; //head position
@@ -55,12 +58,14 @@ void Draw() {
         cout << "O";
       }
       else if (i == candyY && j == candyX) {
-          if (score != 0 && nfruit % 4 == 0)
+          if (score != 0 && nfruit % 5 == 0 && test_variable < 30)
           {
+              candy = true;
               cout << "C";
           }
           else
           {
+              candy = false;
               cout << " ";
           }
       }
@@ -91,6 +96,7 @@ void Draw() {
   }
   cout << endl;
   cout << "Score: " << score  << endl;
+  cout << "Time: " << test_variable << endl;
 }
 
 void Input() {
@@ -173,17 +179,25 @@ void Logic() {
     if (x == fruitX && y == fruitY) {
         score += 10;
         nfruit += 1;
+        candy = false;
+        test_variable = 0;
         fruitX = rand() % width;
         fruitY = rand() % height;
         nTail++;
     }
     else if (x == candyX && y == candyY) {
-        score += 40;
+        score += 50;
+        nfruit += 1;
+        candy = false;
+        test_variable = 0;
         candyX = rand() % width;
         candyY = rand() % height;
         nTail++;
     }
-      
+    if (test_variable == 30) {
+        nfruit += 1;
+        test_variable = 0;
+    }
 }
 
 int main() {
@@ -192,7 +206,10 @@ int main() {
     Draw();
     Input();
     Logic();
-    Sleep(10);
+    if (candy) {
+        test_variable += 1;
+    }
+    Sleep(50);
   }
   return 0;
 }
