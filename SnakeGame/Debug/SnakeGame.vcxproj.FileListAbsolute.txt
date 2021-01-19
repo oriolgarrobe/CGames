@@ -1,2 +1,4 @@
 C:\Users\oriol\source\repos\SnakeGame\Debug\SnakeGame.exe
 C:\Users\oriol\source\repos\SnakeGame\Debug\SnakeGame.pdb
+C:\Users\oriol\source\repos\CGames\SnakeGame\Debug\SnakeGame.exe
+C:\Users\oriol\source\repos\CGames\SnakeGame\Debug\SnakeGame.pdb
