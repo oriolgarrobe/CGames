@@ -178,7 +178,7 @@ void Logic() {
     }
     if (x == fruitX && y == fruitY) {
         score += 10;
-        nfruit += 1;
+        nfruit++;
         candy = false;
         test_variable = 0;
         fruitX = rand() % width;
@@ -187,7 +187,7 @@ void Logic() {
     }
     else if (x == candyX && y == candyY) {
         score += 50;
-        nfruit += 1;
+        nfruit++;
         candy = false;
         test_variable = 0;
         candyX = rand() % width;
@@ -195,7 +195,7 @@ void Logic() {
         nTail++;
     }
     if (test_variable == 30) {
-        nfruit += 1;
+        nfruit++;
         test_variable = 0;
     }
 }
@@ -207,7 +207,7 @@ int main() {
     Input();
     Logic();
     if (candy) {
-        test_variable += 1;
+        test_variable++;
     }
     Sleep(50);
   }
