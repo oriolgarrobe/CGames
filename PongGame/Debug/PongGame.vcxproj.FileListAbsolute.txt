@@ -1,0 +1,2 @@
+C:\Users\oriol\source\repos\CGames\PongGame\Debug\PongGame.exe
+C:\Users\oriol\source\repos\CGames\PongGame\Debug\PongGame.pdb

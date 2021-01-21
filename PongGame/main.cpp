@@ -2,13 +2,17 @@
 
 using namespace std;
 
-enum eDir { STOP = 0, LEFT = 1, UPLEFT = 2, DOWNLEFT = 3, RIGHT = 4, UPRIGHT = 5, DOWNRIGHT = 6};
+enum eDir 
+{ 
+	STOP = 0, LEFT, UPLEFT, DOWNLEFT, RIGHT, UPRIGHT, DOWNRIGHT
+};
 
 class cBall
 {
 private:
 	int x, y;
 	int originalX, originalY;
+	eDir direction;
 
 public:
 	cBall(int posX, int posY) 
@@ -27,20 +31,62 @@ public:
 	{
 		direction = d;
 	}
-	inline getX() { return x; }
-	inline getY() { return y; }
-	inline getDirection() { return direction; }
+	void randomDirection()
+	{
+		direction = (eDir)((rand() % 6) + 1);
+	}
+	inline int getX() { return x; }
+	inline int getY() { return y; }
+	inline eDir getDirection() { return direction; }
+	void Move()
+	{
+		switch (direction)
+		{
+		case STOP:
+			break;
+		case LEFT:
+			x--;
+			break;
+		case UPLEFT:
+			x--; y--;
+			break;
+		case DOWNLEFT:
+			x--; y++;
+			break;
+		case RIGHT:
+			x++;
+			break;
+		case UPRIGHT:
+			x++; y--;
+			break;
+		case DOWNRIGHT:
+			x++; y++;
+			break;
+		default:
+			break;
+		}
+	}
+	friend ostream& operator<<(ostream& o, cBall c)
+	{
+		o << "Ball [" << c.x << "," << c.y << "][" << c.direction << "]" << endl;
+		return o;
+	}
 };
 
-cBall::cBall()
+int main()
 {
-}
-
-cBall::~cBall()
-{
-}
-
-int main() {
+	cBall c(0, 0);
+	cout << c << endl;
+	c.randomDirection();
+	cout << c << endl;
+	c.Move();
+	cout << c << endl;
+	c.randomDirection();
+	c.Move();
+	cout << c << endl;
+	c.randomDirection();
+	c.Move();
+	cout << c << endl;
 
 	return 0;
 }
