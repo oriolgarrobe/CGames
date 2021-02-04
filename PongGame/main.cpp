@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <conio.h>
+#include <Windows.h>
 
 using namespace std;
 
@@ -144,9 +145,14 @@ public:
 	}
 	void Draw()
 	{
+		HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 		system("cls");
 		for (int i = 0; i < width + 1; i++)
+		{
+			SetConsoleTextAttribute(h, 15);
 			cout << "\xB2";
+		}
+			
 		cout << endl;
 
 		for (int i = 0; i < height; i++)
@@ -161,30 +167,66 @@ public:
 				int player2y = player2->getY();
 
 				if (j == 0)
+				{
+					SetConsoleTextAttribute(h, 15);
 					cout << "\xB2"; //top wall
+				}
+					
 				if (j == width - 1)
+				{
+					SetConsoleTextAttribute(h, 15);
 					cout << "\xB2"; //bottom wall
-				if (j == ballx && i == bally)
-					cout << "\x9B"; //ball
-				//paddle1
-				else if (j == player1x && i == player1y)
-					cout << "\xDB"; 
-				else if (j == player1x && i == player1y + 1)
-					cout << "\xDB"; 
-				else if (j == player1x && i == player1y + 2)
-					cout << "\xDB"; 
-				else if (j == player1x && i == player1y + 3)
-					cout << "\xDB";
+				}
 
-				//paddle2 width - 1
-				else if (j == player2x  && i == player2y)
+				if (j == ballx && i == bally)
+				{
+					SetConsoleTextAttribute(h, 14);
+					cout << "\x9B"; //ball
+				}
+													
+			    //paddle1
+				else if (j == player1x && i == player1y)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 					cout << "\xDB";
-				else if (j == player2x && i == player2y + 1)
+				}
+				else if (j == player1x && i == player1y + 1)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 					cout << "\xDB";
-				else if (j == player2x && i == player2y + 2)
+				}
+				else if (j == player1x && i == player1y + 2)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 					cout << "\xDB";
-				else if (j == player2x && i == player2y + 3)
+				}
+				else if (j == player1x && i == player1y + 3)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_RED | FOREGROUND_INTENSITY);
 					cout << "\xDB";
+				}
+
+				//paddle2 width
+				else if (j == player2x - 1 && i == player2y)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == player2x - 1 && i == player2y + 1)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == player2x - 1 && i == player2y + 2)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == player2x - 1 && i == player2y + 3)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
 
 				else
 					cout << " ";
@@ -195,7 +237,10 @@ public:
 		}
 
 		for (int i = 0; i < width + 1; i++)
+		{
+			SetConsoleTextAttribute(h, 15);
 			cout << "\xB2";
+		}
 		cout << endl;
 
 		cout << "Score 1: " << score1 << endl << "Score 2: " << score2 << endl;
@@ -251,7 +296,7 @@ public:
 					ball->changeDirection((eDir)((rand() % 3) + 4));
 		//Right paddle
 		for (int i = 0; i < 4; i++)
-			if (ballx == player2x - 1)
+			if (ballx == player2x - 2)
 				if (bally == player2y + i)
 					ball->changeDirection((eDir)((rand() % 3) + 1));
 
@@ -287,7 +332,10 @@ public:
 };
 int main()
 {
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	cGameManager c(40, 20);
 	c.Run();
 	return 0;
 }
+
+// SetConsoleTextAttribute(h, FOREGROUND_COLOR | FOREGROUND_INTENSITY);
