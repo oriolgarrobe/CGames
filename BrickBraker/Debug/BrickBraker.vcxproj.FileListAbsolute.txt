@@ -1,0 +1,2 @@
+C:\Users\oriol\source\repos\CGames\BrickBraker\Debug\BrickBraker.exe
+C:\Users\oriol\source\repos\CGames\BrickBraker\Debug\BrickBraker.pdb

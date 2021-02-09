@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\oriol\source\repos\CGames\BrickBraker\main.cpp(123,13): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  BrickBraker.vcxproj -> C:\Users\oriol\source\repos\CGames\BrickBraker\Debug\BrickBraker.exe
