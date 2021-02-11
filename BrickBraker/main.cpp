@@ -139,6 +139,45 @@ public:
 	void Draw() // NEXT STEP
 	{
 		//draw the thingy
+		HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+		system("cls");
+
+		// Top wall ?? 
+		for (int i = 0; i < width + 1; i++)
+		{
+			SetConsoleTextAttribute(h, 15);
+			cout << "\xB2";
+		}
+		cout << endl;
+
+		for (int i = 0; i < height; i++)
+		{
+			for (int j = 0; j < width; j++)
+			{
+				int ballx = ball->getX();
+				int bally = ball->getY();
+				int playerx = player->getX();
+				int playery = player->getY();
+			}
+
+			if (j == 0)
+			{
+				SetConsoleTextAttribute(h, 15);
+				cout << "\xB2"; //top wall
+			}
+
+			if (j == ballx && i == bally)
+			{
+				SetConsoleTextAttribute(h, 14);
+				cout << "\x9B"; //ball
+			}
+
+
+
+		}
+		cout << endl;
+
+		
 	}
 	void Move()
 	{
