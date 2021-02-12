@@ -38,7 +38,7 @@ public:
 	}
 	void randomDirection()
 	{
-		direction = (eDir)((rand() % 6) + 1);
+		direction = (eDir)((rand() % 3) + 1);
 	}
 	inline int getX() { return x; }
 	inline int getY() { return y; }
@@ -98,8 +98,8 @@ public:
 	inline void Reset() { x = originalX; y = originalY; }
 	inline int getX() { return x; }
 	inline int getY() { return y; }
-	inline void moveRight() { x++; }
-	inline void moveLeft() { x--; }
+	inline void moveRight() { x += 2; }
+	inline void moveLeft() { x -= 2; }
 
 	friend ostream& operator<<(ostream& o, cPaddle c)
 	{
@@ -126,7 +126,7 @@ public:
 		score = 0;
 		width = w; height = h;
 		ball = new cBall(w / 2, h - 2);
-		player = new cPaddle(w / 2 - 2, h - 1);
+		player = new cPaddle(w / 2 - 4, h - 1);
 	}
 	~cGameManager()
 	{
@@ -135,6 +135,10 @@ public:
 	void ScoreUp(cPaddle * player)
 	{
 		//go up everytime a brick is broken
+		ball->Reset();
+		player->Reset();
+		Draw();
+		Sleep(2000);
 	}
 	void Draw() // NEXT STEP
 	{
@@ -142,7 +146,7 @@ public:
 		HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 		system("cls");
 
-		// Top wall ?? 
+		// 
 		for (int i = 0; i < width + 1; i++)
 		{
 			SetConsoleTextAttribute(h, 15);
@@ -158,26 +162,69 @@ public:
 				int bally = ball->getY();
 				int playerx = player->getX();
 				int playery = player->getY();
+
+				if (j == 0)
+				{
+					SetConsoleTextAttribute(h, 15);
+					cout << "\xB2"; //left wall
+				}
+
+				if (j == width - 1)
+				{
+					SetConsoleTextAttribute(h, 15);
+					cout << "\xB2"; //right wall
+				}
+
+				if (j == ballx - 1 && i == bally)
+				{
+					SetConsoleTextAttribute(h, 14);
+					cout << "\x9B"; //ball
+				}
+
+				//Paddle
+				else if (j == playerx && i == playery)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == playerx + 1 && i == playery)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == playerx + 2 && i == playery)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == playerx + 3 && i == playery)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == playerx + 4 && i == playery)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == playerx + 5 && i == playery)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+				else if (j == playerx + 6 && i == playery)
+				{
+					SetConsoleTextAttribute(h, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+					cout << "\xDB";
+				}
+
+				else
+					cout << " ";
 			}
 
-			if (j == 0)
-			{
-				SetConsoleTextAttribute(h, 15);
-				cout << "\xB2"; //top wall
-			}
-
-			if (j == ballx && i == bally)
-			{
-				SetConsoleTextAttribute(h, 14);
-				cout << "\x9B"; //ball
-			}
-
-
-
+			cout << endl;
 		}
 		cout << endl;
-
-		
 	}
 	void Move()
 	{
@@ -197,7 +244,7 @@ public:
 					player->moveLeft();
 
 			if (current == right)
-				if (playerx + 2 < width)
+				if (playerx + 8 < width)
 					player->moveRight();
 
 			if (ball->getDirection() == STOP)
@@ -215,13 +262,13 @@ public:
 		int playery = player->getY();
 
 		//Paddle
-		for (int i = 0; i < 3; i++)
-			if (bally == playery + 1)
+		for (int i = 0; i < 9; i++)
+			if (bally == playery - 1 && ball->getDirection() != STOP)
 				if (ballx == playerx + i)
 					ball->changeDirection((eDir)((rand() % 3) + 1));
 
 		//Top wall
-		if (bally == 1)
+		if (bally == 0)
 			ball->changeDirection(ball->getDirection() == UPRIGHT ? DOWNRIGHT : DOWNLEFT);
 
 		//Right wall
@@ -250,14 +297,8 @@ public:
 
 int main()
 {
-	cPaddle p1(0, 0);
-	cPaddle p2(10, 0);
-	cout << p1 << endl;
-	cout << p2 << endl;
-	p1.moveLeft();
-	p2.moveRight();
-	cout << p1 << endl;
-	cout << p2 << endl;
+	cGameManager c(40, 20);
+	c.Run();
 
 	return 0;
 
